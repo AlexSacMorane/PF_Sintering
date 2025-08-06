@@ -2,16 +2,18 @@
 # Librairies
 #-------------------------------------------------------------------------------
 
-import numpy as np
-import matplotlib.pyplot as plt
-from pathlib import Path
-import os, shutil, time
+if __name__ == '__main__':
+    
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from pathlib import Path
+    import os, shutil, time
 
-# Own 
-from CreateIC import *
-from WriteI import *
-from SortFiles import *
-from PostProcessing import *
+    # Own 
+    from CreateIC import *
+    from WriteI import *
+    from SortFiles import *
+    from PostProcessing import *
 
 #-------------------------------------------------------------------------------
 # Functions
