@@ -5,6 +5,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pyvista as pv
+import pickle
 
 # Own
 from main import index_to_str
