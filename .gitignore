@@ -5,6 +5,7 @@
 *.e
 *.avi
 PF_Sintering.i
+tmp*
 
 # example from MOOSE
 examples
