@@ -64,7 +64,7 @@ if __name__ == '__main__':
     d_mesh = min(x_max-x_min, y_max-y_min)/n_mesh # size of the mesh element
 
     # description of the PSD
-    n_grains = 9
+    n_grains = 10
     mean_R = 15/2
     var_R = 0.2 # -
 
