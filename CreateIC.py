@@ -118,23 +118,23 @@ def generate_microstructure(dict_user):
             # look if overlap exists
             overlap, L_overlap = check_overlap(L_radius_grains_step, L_pos_grains)
 
-    # increase the radius to ensure at least one contact per grain
+    # magnetism to the closer grain to ensure at least one contact per grain
     for i_grain in range(len(L_pos_grains)-1):
         # compute the distance to the closer grain
         min_distance = None
         for j_grain in range(len(L_pos_grains)):
             if i_grain != j_grain:
                 if min_distance == None:
-                    distance = np.linalg.norm(np.array(L_pos_grains[i_grain]) - L_pos_grains[j_grain])
+                    distance = np.linalg.norm(L_pos_grains[i_grain] - L_pos_grains[j_grain]) - (L_radius_grains[i_grain]+L_radius_grains[j_grain])
                     min_distance = distance
-                    min_radius = L_radius_grains[j_grain]
+                    j_min = j_grain
                 else :
-                    distance = np.linalg.norm(np.array(L_pos_grains[i_grain]) - L_pos_grains[j_grain])    
+                    distance = np.linalg.norm(L_pos_grains[i_grain] - L_pos_grains[j_grain]) - (L_radius_grains[i_grain]+L_radius_grains[j_grain]) 
                     if distance < min_distance:
                         min_distance = distance
-                        min_radius = L_radius_grains[j_grain]
-        # adapt the radius to ensure contact
-        L_radius_grains[i_grain] = min_distance - min_radius
+                    j_min = j_grain
+        # adapt the position to ensure contact
+        L_pos_grains[i_grain] = L_pos_grains[i_grain] + min_distance*(L_pos_grains[j_min] - L_pos_grains[i_grain])/np.linalg.norm(L_pos_grains[i_grain] - L_pos_grains[j_grain])
 
     print('\ncompute maps')
     # Initialize the arrays
