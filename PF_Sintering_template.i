@@ -138,10 +138,10 @@
 [Outputs]
     execute_on = 'initial timestep_end'
     exodus = true
-    #[./other]
-    #    type = VTK
-    #    execute_on = 'TIMESTEP_END'
-    #[../]
+    [./other]
+        type = VTK
+        execute_on = 'TIMESTEP_END'
+    [../]
     [console]
         type = Console
         execute_on = 'nonlinear'
