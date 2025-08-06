@@ -4,6 +4,7 @@
 *.csv
 *.e
 *.avi
+PF_Sintering.i
 
 # example from MOOSE
 examples
@@ -13,3 +14,4 @@ examples
 __pycache__
 .jitcache
 data
+output
