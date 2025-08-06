@@ -8,3 +8,4 @@
 # Folders created during the simulation
 __pycache__
 .jitcache
+data
