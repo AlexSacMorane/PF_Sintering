@@ -234,8 +234,7 @@ def generate_microstructure(dict_user):
     # save in dicts
     dict_user['L_x'] = L_x
     dict_user['L_y'] = L_y
-    dict_user['L_M_eta'] = L_M_eta
-    dict_user['M_c'] = M_c
+    dict_user['n_eta'] = len(L_M_eta)
 
     print('write data')
     # iterate on grains

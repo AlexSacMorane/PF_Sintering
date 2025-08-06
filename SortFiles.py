@@ -86,7 +86,7 @@ def Sort_vtk_reduced(dict_user):
                    '\t<PUnstructuredGrid GhostLevel="1">\n'+\
                    '\t\t<PPointData>\n'+\
                    '\t\t\t<PDataArray type="Int32" Name="libmesh_node_id"/>\n'
-            for i_grain in range(len(dict_user['L_M_etas'])):
+            for i_grain in range(dict_user['n_eta']):
                    line = line + '\t\t\t<PDataArray type="Float64" Name="eta'+str(i_grain)+'"/>\n'
             line = line + '\t\t\t<PDataArray type="Float64" Name="c"/>\n'+\
                    '\t\t\t<PDataArray type="Float64" Name="w"/>\n'+\

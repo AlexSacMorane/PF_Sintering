@@ -35,7 +35,7 @@ def write_input_pf(dict_user):
             line = line[:-1] + ' ' + str(dict_user['L_y'][-1]) + '\n'
         if j == 15:
             line = ''
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 line = line + '\t[./eta'+str(i_grain)+']\n'+\
                               '\t\torder = FIRST\n'+\
                               '\t\tfamily = LAGRANGE\n'+\
@@ -47,10 +47,10 @@ def write_input_pf(dict_user):
                               '\t[../]\n'
         if j == 30:
             line = ''
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 # prepare coupled_variables str
                 coupled_variables = "'"
-                for j_grain in range(len(dict_user['L_M_eta'])):
+                for j_grain in range(dict_user['n_eta']):
                     if j_grain != i_grain:
                         coupled_variables = coupled_variables + 'eta'+str(j_grain) + ' '
                 coupled_variables = coupled_variables + "c'"
@@ -76,7 +76,7 @@ def write_input_pf(dict_user):
         if j == 37:
             # prepare coupled_variables str
             coupled_variables = "'"
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 coupled_variables = coupled_variables + 'eta'+str(i_grain) + ' '
             coupled_variables = coupled_variables + "'"
             # write line
@@ -87,7 +87,7 @@ def write_input_pf(dict_user):
         if j == 67:
             # prepare coupled_variables str
             coupled_variables = "'"
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 coupled_variables = coupled_variables + 'eta'+str(i_grain) + ' '
             coupled_variables = coupled_variables + "c'"
             # write line
@@ -97,20 +97,20 @@ def write_input_pf(dict_user):
         if j == 70:
             # prepare expression str
             expression = "'A*(c^2)*((1-c)^2) + B*(c^2 + 6*(1-c)*("
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 expression = expression + 'eta'+str(i_grain) + '^2+'
             expression = expression[:-1] + ') - 4*(2-c)*('   
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 expression = expression + 'eta'+str(i_grain) + '^3+' 
             expression = expression[:-1] + ') + 3*(' 
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 expression = expression + 'eta'+str(i_grain) + '^2+' 
             expression = expression[:-1] + ")^2)'"     
             # write line
             line = line[:-1] + ' ' + expression + '\n'
         if j == 78:
             line = ''
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 line = line + '\t[eta'+str(i_grain)+'_txt]\n'+\
                               '\t\ttype = PiecewiseMultilinear\n'+\
                               '\t\tdata_file = data/eta'+str(i_grain)+'.txt\n'+\
@@ -123,7 +123,7 @@ def write_input_pf(dict_user):
             line = line[:-1] + ' ' + str(dict_user['dt_PF']) + '\n'      
         if j == 121:
             line = ''
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 line = line + '\t[eta'+str(i_grain)+'_pp]\n'+\
                               '\t\ttype = ElementAverageValue\n'+\
                               '\t\tvariable = eta'+str(i_grain)+'\n'+\
@@ -131,7 +131,7 @@ def write_input_pf(dict_user):
         if j == 131:
             # prepare variable str
             variable = "'"
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 variable = variable + 'eta'+str(i_grain) + ' '
             variable = variable[:-1]+"'"  
             # write line
@@ -139,7 +139,7 @@ def write_input_pf(dict_user):
         if j == 150:
             # prepare show str
             show = "'c_pp "
-            for i_grain in range(len(dict_user['L_M_eta'])):
+            for i_grain in range(dict_user['n_eta']):
                 show = show + 'eta'+str(i_grain) + '_pp '
             show = show[:-1]+"'"  
             # write line
