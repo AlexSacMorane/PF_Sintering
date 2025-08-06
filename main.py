@@ -26,16 +26,16 @@ def create_folder(name):
 #-------------------------------------------------------------------------------
 
 def index_to_str(j):
-  '''
-  An integer is converted to a float with 3 components
-  '''
-  if j < 10:
-      j_str = '00'+str(j)
-  elif 10 <= j and j < 100:
-      j_str = '0'+str(j)
-  else :
-      j_str = str(j)
-  return j_str
+    '''
+    An integer is converted to a float with 3 components
+    '''
+    if j < 10:
+        j_str = '00'+str(j)
+    elif 10 <= j and j < 100:
+        j_str = '0'+str(j)
+    else :
+        j_str = str(j)
+    return j_str
 
 
 #-------------------------------------------------------------------------------
