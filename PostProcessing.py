@@ -70,7 +70,7 @@ def ReadCSV(dict_user):
         time_pp.append(float(data[0]))
         c_pp.append(float(data[1]))
         for i_grain in range(dict_user['n_eta']):
-            L_eta_pp[i_grain].append(data[2+i_grain])
+            L_eta_pp[i_grain].append(float(data[2+i_grain]))
 
     # plot time-mass
     fig, ax1 = plt.subplots(1,1,figsize=(16,9))
@@ -201,7 +201,7 @@ def PlotFreeSurface(dict_tempo):
     ax1.set_ylabel('neck area (-)', fontsize=25)
     ax1.tick_params(axis='both', labelsize=20, width=3, length=3)
     fig.tight_layout()
-    fig.savefig('output/evol_ite_neck.png')
+    fig.savefig('output/evol_ite_freesurface.png')
     plt.close(fig)
 
 #-------------------------------------------------------------------------------
