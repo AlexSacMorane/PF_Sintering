@@ -5,7 +5,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pyvista as pv
-import pickle, porespy, skimage
+import pickle, porespy, skimage, time
 
 # Own
 from main import index_to_str
@@ -18,6 +18,9 @@ def pp(dict_user):
     '''
     Main function for the post-processing.    
     '''
+    # compute performances
+    tic = time.perf_counter() 
+
     # initialize the dict
     dict_tempo = {
         'L_M_Neck': [],
@@ -60,6 +63,14 @@ def pp(dict_user):
 
     # Guevel, 2022
     PlotMorphometers(dict_tempo)
+
+    # compute performances
+    tac = time.perf_counter()
+    hours = (tac-tic)//(60*60)
+    minutes = (tac-tic - hours*60*60)//(60)
+    seconds = int(tac-tic - hours*60*60 - minutes*60)
+    print("\nPost-processing time + : "+str(hours)+" hours "+str(minutes)+" minutes "+str(seconds)+" seconds")
+    print('Post-processing ends')
 
 #-------------------------------------------------------------------------------
 

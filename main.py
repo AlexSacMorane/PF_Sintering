@@ -47,6 +47,9 @@ def index_to_str(j):
 
 if __name__ == '__main__':
 
+    # compute performances
+    tic = time.perf_counter()
+
 #-------------------------------------------------------------------------------
 # Parameter
 #-------------------------------------------------------------------------------
@@ -92,9 +95,6 @@ if __name__ == '__main__':
     # sorting files
     reduce_vtk = True # reduce or not the number of vtk
     n_vtk_max = 10 # if reduced, maximal number of vtk files
-
-    # compute performances
-    tic = time.perf_counter()
 
 #------------------------------------------------------------------------------
 # create dict
@@ -172,8 +172,18 @@ if __name__ == '__main__':
     with open('output/dict_user', 'wb') as handle:
         pickle.dump(dict_user, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
+    # compute performances
+    tac = time.perf_counter()
+    hours = (tac-tic)//(60*60)
+    minutes = (tac-tic - hours*60*60)//(60)
+    seconds = int(tac-tic - hours*60*60 - minutes*60)
+    print("\nSimulation time : "+str(hours)+" hours "+str(minutes)+" minutes "+str(seconds)+" seconds")
+    print('Simulation ends')
+
 #-------------------------------------------------------------------------------
 # pp
 #-------------------------------------------------------------------------------
-  
+      
+    # see PostProcessing.py for the called functions
     pp(dict_user)
+    
