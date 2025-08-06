@@ -5,6 +5,10 @@
 *.e
 *.avi
 
+# example from MOOSE
+examples
+
+
 # Folders created during the simulation
 __pycache__
 .jitcache
