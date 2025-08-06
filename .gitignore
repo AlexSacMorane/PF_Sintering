@@ -1,0 +1,10 @@
+# Simulation files
+*.vtu
+*.pvtu
+*.csv
+*.e
+*.avi
+
+# Folders created during the simulation
+__pycache__
+.jitcache
