@@ -168,9 +168,5 @@ if __name__ == '__main__':
 #-------------------------------------------------------------------------------
 # pp
 #-------------------------------------------------------------------------------
-
-    # switch environment as pyvista installation has an error on moose one
-    os.system('conda activate base')
-    import pyvista as pv
-    
+  
     pp(dict_user)
