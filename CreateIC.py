@@ -169,9 +169,11 @@ def generate_microstructure(dict_user):
                     L_M_eta[i_grain][-1-i_y, i_x] = 0
 
     # print maps
-    fig, (ax1, ax2) = plt.subplots(2,1,figsize=(16,9))
+    fig, (ax1, ax2) = plt.subplots(1,2,figsize=(16,9))
     im = ax1.imshow(M_etas_plot, interpolation = 'nearest', extent=(L_x[0],L_x[-1],L_y[0],L_y[-1]))
+    ax1.set_title(r'Map of $\eta$s',fontsize = 30)
     im = ax2.imshow(M_c, interpolation = 'nearest', extent=(L_x[0],L_x[-1],L_y[0],L_y[-1]))
+    ax2.set_title(r'Map of $c$',fontsize = 30)
     fig.tight_layout()
     fig.savefig('output/IC_maps_bin.png')
     plt.close(fig)
@@ -217,17 +219,12 @@ def generate_microstructure(dict_user):
                 M_c[i_y, i_x] = 0.5*(1+math.cos(math.pi*(-sd_c[i_y, i_x]+dict_user['w_int']/2)/(dict_user['w_int'])))
 
     # Plot maps
-    fig, ((ax1),(ax2)) = plt.subplots(2,1,figsize=(9,25))
+    fig, (ax1, ax2) = plt.subplots(1,2,figsize=(16,9))
     # parameters
-    title_fontsize = 30
-    # psi
-    im = ax1.imshow(M_etas_plot, interpolation = 'nearest', extent=(L_x[0],L_x[-1],L_y[0],L_y[-1]))
-    fig.colorbar(im, ax=ax1)
-    ax1.set_title(r'Map of $\eta$s',fontsize = title_fontsize)
-    # phi
-    im = ax2.imshow(M_c, interpolation = 'nearest', extent=(L_x[0],L_x[-1],L_y[0],L_y[-1]))
-    fig.colorbar(im, ax=ax2)
-    ax2.set_title(r'Map of c',fontsize = title_fontsize)
+    ax1.imshow(M_etas_plot, interpolation = 'nearest', extent=(L_x[0],L_x[-1],L_y[0],L_y[-1]))
+    ax1.set_title(r'Map of $\eta$s',fontsize = 30)
+    ax2.imshow(M_c, interpolation = 'nearest', extent=(L_x[0],L_x[-1],L_y[0],L_y[-1]))
+    ax2.set_title(r'Map of c',fontsize = 30)
     fig.savefig('output/IC_maps_pf.png')
     plt.close(fig)
 
