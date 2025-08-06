@@ -48,6 +48,8 @@ def ReadCSV(dict_user):
     '''
     Read the csv file generated with Moose (made by postprocessors).
     '''
+    print('\nread csv')
+
     # read file
     f = open('output/PF_Sintering_csv.csv', "r")
     lines = f.readlines()
