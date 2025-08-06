@@ -18,10 +18,6 @@ def pp(dict_user):
     '''
     Main function for the post-processing.    
     '''
-    # read and plot the .csv data.
-    ReadCSV(dict_user)
-
-    print('\nread pvtu')
     # initialize the dict
     dict_tempo = {
         'L_M_Neck': [],
@@ -32,6 +28,11 @@ def pp(dict_user):
         'L_M3': [],
         'map': None
     }
+
+    # read and plot the .csv data.
+    ReadCSV(dict_user, dict_tempo)
+
+    print('\nread pvtu')
     # iterate on the .pvtu files
     for i in range(dict_user['last_j']+1):
 
@@ -62,7 +63,7 @@ def pp(dict_user):
 
 #-------------------------------------------------------------------------------
 
-def ReadCSV(dict_user):
+def ReadCSV(dict_user, dict_tempo):
     '''
     Read the csv file generated with Moose (made by postprocessors).
     '''
@@ -113,6 +114,13 @@ def ReadCSV(dict_user):
     fig.tight_layout()
     fig.savefig('output/evol_time_etas.png')
     plt.close(fig)
+
+    # extract time from the iterations saved
+    L_time_extracted = []
+    for ite in dict_user['L_ite_saved']:
+        L_time_extracted.append(time_pp[ite])
+    # save
+    dict_tempo['L_time_extracted'] = L_time_extracted
 
 #-------------------------------------------------------------------------------
 
@@ -175,9 +183,9 @@ def PlotNeck(dict_tempo):
             for ite in range(len(dict_tempo['L_M_Neck'])):
                 L_Neck_i_j.append(dict_tempo['L_M_Neck'][ite][i_grain, j_grain])
             # plot
-            ax1.plot(L_Neck_i_j, linewidth=6)
+            ax1.plot(dict_tempo['L_time_extracted'], L_Neck_i_j, linewidth=6)
     # close figure
-    ax1.set_xlabel('iteration (-)', fontsize=25)
+    ax1.set_xlabel('time (-)', fontsize=25)
     ax1.set_ylabel('neck area (-)', fontsize=25)
     ax1.tick_params(axis='both', labelsize=20, width=3, length=3)
     fig.tight_layout()
@@ -212,10 +220,9 @@ def PlotFreeSurface(dict_tempo):
     '''
     # open figure
     fig, (ax1) = plt.subplots(1,1,figsize=(16,9))
-    ax1.plot(dict_tempo['L_freeSurface'], linewidth=6)
-    # close figure
-    ax1.set_xlabel('iteration (-)', fontsize=25)
-    ax1.set_ylabel('neck area (-)', fontsize=25)
+    ax1.plot(dict_tempo['L_time_extracted'], dict_tempo['L_freeSurface'], linewidth=6)
+    ax1.set_xlabel('time (-)', fontsize=25)
+    ax1.set_ylabel('free surface (-)', fontsize=25)
     ax1.tick_params(axis='both', labelsize=20, width=3, length=3)
     fig.tight_layout()
     fig.savefig('output/evol_ite_freesurface.png')
@@ -337,23 +344,23 @@ def PlotMorphometers(dict_tempo):
     # open figure
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2,figsize=(2*16,2*9))
     # M0
-    ax1.plot(dict_tempo['L_M0'], linewidth=6)
-    ax1.set_xlabel('iteration (-)', fontsize=25)
+    ax1.plot(dict_tempo['L_time_extracted'], dict_tempo['L_M0'], linewidth=6)
+    ax1.set_xlabel('time (-)', fontsize=25)
     ax1.set_ylabel('M0 porosity (-)', fontsize=25)
     ax1.tick_params(axis='both', labelsize=20, width=3, length=3)
     # M1
-    ax2.plot(dict_tempo['L_M1'], linewidth=6)
-    ax2.set_xlabel('iteration (-)', fontsize=25)
+    ax2.plot(dict_tempo['L_time_extracted'], dict_tempo['L_M1'], linewidth=6)
+    ax2.set_xlabel('time (-)', fontsize=25)
     ax2.set_ylabel('M1 perimeter (-)', fontsize=25)
     ax2.tick_params(axis='both', labelsize=20, width=3, length=3)
     # M2
-    ax3.plot(dict_tempo['L_M2'], linewidth=6)
-    ax3.set_xlabel('iteration (-)', fontsize=25)
+    ax3.plot(dict_tempo['L_time_extracted'], dict_tempo['L_M2'], linewidth=6)
+    ax3.set_xlabel('time (-)', fontsize=25)
     ax3.set_ylabel('M2 grain size (-)', fontsize=25)
     ax3.tick_params(axis='both', labelsize=20, width=3, length=3)
     # M3
-    ax4.plot(dict_tempo['L_M3'], linewidth=6)
-    ax4.set_xlabel('iteration (-)', fontsize=25)
+    ax4.plot(dict_tempo['L_time_extracted'], dict_tempo['L_M3'], linewidth=6)
+    ax4.set_xlabel('time (-)', fontsize=25)
     ax4.set_ylabel('M3 euler (-)', fontsize=25)
     ax4.tick_params(axis='both', labelsize=20, width=3, length=3)
     # close
