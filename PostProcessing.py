@@ -20,9 +20,11 @@ def pp(dict_user):
     # read and plot the .csv data.
     ReadCSV(dict_user)
 
+    print('\nread pvtu')
     # initialize the dict
     dict_tempo = {
-        'L_M_Neck': []
+        'L_M_Neck': [],
+        'L_freeSurface': [],
     }
     # iterate on the .pvtu files
     for i in range(dict_user['last_j']+1):
@@ -32,9 +34,13 @@ def pp(dict_user):
 
         # compute the neck area
         ComputeNeck(dict_tempo)
+        # compute the free surface area
+        ComputeFreeSurface(dict_tempo)
 
     # plot the neck area
     PlotNeck(dict_tempo)
+    # plot the free surface area
+    PlotFreeSurface(dict_tempo)
 
 #-------------------------------------------------------------------------------
 
@@ -158,3 +164,52 @@ def PlotNeck(dict_tempo):
     fig.savefig('output/evol_ite_neck.png')
     plt.close(fig)
 
+#-------------------------------------------------------------------------------
+
+def ComputeFreeSurface(dict_tempo):
+    '''
+    Compute the free surface area.
+
+    Defined as the integral of the function c_int (=1 for  c in [0.45, 0.55]).
+    '''
+    # pp data
+    L_c_int = []
+    for c in dict_tempo['L_c']:
+        if 0.45 <= c and c <= 0.55:
+            L_c_int.append(1)
+        else :
+            L_c_int.append(0)
+    # save
+    dict_tempo['L_freeSurface'].append(np.mean(L_c_int))
+    
+#-------------------------------------------------------------------------------
+
+def PlotFreeSurface(dict_tempo):
+    '''
+    Plot the free surface area.
+
+    Defined as the integral of the function c_int (=1 for  c in [0.45, 0.55]).
+    '''
+    # open figure
+    fig, (ax1) = plt.subplots(1,1,figsize=(16,9))
+    ax1.plot(dict_tempo['L_freeSurface'], linewidth=6)
+    # close figure
+    ax1.set_xlabel('iteration (-)', fontsize=25)
+    ax1.set_ylabel('neck area (-)', fontsize=25)
+    ax1.tick_params(axis='both', labelsize=20, width=3, length=3)
+    fig.tight_layout()
+    fig.savefig('output/evol_ite_neck.png')
+    plt.close(fig)
+
+#-------------------------------------------------------------------------------
+# MAiN code
+#-------------------------------------------------------------------------------
+
+if __name__ == '__main__':
+
+    # load dict_user
+    with open('output/dict_user', 'rb') as handle:
+        dict_user = pickle.load(handle)
+
+    # call pp function
+    pp(dict_user)
