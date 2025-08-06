@@ -261,10 +261,30 @@ def RebuildMap(dict_user, dict_tempo):
                 M_void[-1-i_y, i_x] = 1
             else:
                 M_solid[-1-i_y, i_x] = 1
-
+    
+    # extract maps (exclude void on the sides)
+    # find i_x_min
+    i_x_min = 0
+    while np.max(M_solid[:, i_x_min]) == 0:
+        i_x_min = i_x_min + 1
+    # find i_x_max
+    i_x_max = M_solid.shape[1]-1
+    while np.max(M_solid[:, i_x_max]) == 0:
+        i_x_max = i_x_max - 1
+    # find i_y_min
+    i_y_min = 0
+    while np.max(M_solid[i_y_min, :]) == 0:
+        i_y_min = i_y_min + 1
+    # find i_y_max
+    i_y_max = M_solid.shape[0]-1
+    while np.max(M_solid[i_y_max, :]) == 0:
+        i_y_max = i_y_max - 1
+    
     # save
     dict_tempo['M_void'] = M_void.copy()
+    dict_tempo['M_void_extracted'] = M_void.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
     dict_tempo['M_solid'] = M_solid.copy()
+    dict_tempo['M_solid_extracted'] = M_solid.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
 
 #-------------------------------------------------------------------------------
 
@@ -275,7 +295,7 @@ def ComputeMorphometers(dict_tempo):
     see Guével, 2022
     '''
     # M0 porosity
-    M0 = porespy.metrics.porosity(dict_tempo['M_void'])
+    M0 = porespy.metrics.porosity(dict_tempo['M_void_extracted'])
     # M1 perimeter
     M1 = skimage.measure.perimeter(dict_tempo['M_solid'])
     # M2 grain size
