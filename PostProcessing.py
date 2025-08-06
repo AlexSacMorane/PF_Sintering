@@ -48,6 +48,9 @@ def pp(dict_user):
         RebuildMap(dict_user, dict_tempo)
         ComputeMorphometers(dict_tempo)
 
+    # plot final map
+    PlotMap(dict_user, dict_tempo)
+
     # Biswas, 2018
     # plot the neck area
     PlotNeck(dict_tempo)
@@ -285,6 +288,20 @@ def RebuildMap(dict_user, dict_tempo):
     dict_tempo['M_void_extracted'] = M_void.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
     dict_tempo['M_solid'] = M_solid.copy()
     dict_tempo['M_solid_extracted'] = M_solid.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
+
+#-------------------------------------------------------------------------------
+
+def PlotMap(dict_user, dict_tempo):
+    '''
+    plot the current configuration.
+    '''
+    # Plot maps
+    fig, (ax1) = plt.subplots(1,2,figsize=(16,9))
+    # parameters
+    ax1.imshow(dict_tempo['M_solid'], interpolation = 'nearest', extent=(dict_user['L_x'][0],dict_user['L_x'][-1],dict_user['L_y'][0],dict_user['L_x'][-1]))
+    fig.savefig('output/map_c.png')
+    plt.close(fig)
+
 
 #-------------------------------------------------------------------------------
 
