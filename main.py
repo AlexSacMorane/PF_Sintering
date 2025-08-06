@@ -7,7 +7,7 @@ if __name__ == '__main__':
     import numpy as np
     import matplotlib.pyplot as plt
     from pathlib import Path
-    import os, shutil, time
+    import os, shutil, time, pickle
 
     # Own 
     from CreateIC import *
@@ -150,7 +150,7 @@ if __name__ == '__main__':
 # run the simulation
 #-------------------------------------------------------------------------------
 
-    print('\n run simulation')
+    print('\nrun simulation')
     os.system('mpiexec -n '+str(dict_user['n_proc'])+' ~/projects/moose/modules/phase_field/phase_field-opt -i PF_Sintering.i')
 
 #-------------------------------------------------------------------------------
@@ -164,6 +164,13 @@ if __name__ == '__main__':
     Sort_vtk(dict_user)
     # remove
     shutil.rmtree('data')
+
+#-------------------------------------------------------------------------------
+# save dict
+#-------------------------------------------------------------------------------
+
+    with open('output/dict_user', 'wb') as handle:
+        pickle.dump(dict_user, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 #-------------------------------------------------------------------------------
 # pp
