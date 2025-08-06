@@ -296,12 +296,11 @@ def PlotMap(dict_user, dict_tempo):
     plot the current configuration.
     '''
     # Plot maps
-    fig, (ax1) = plt.subplots(1,2,figsize=(16,9))
+    fig, (ax1) = plt.subplots(1,1,figsize=(16,9))
     # parameters
     ax1.imshow(dict_tempo['M_solid'], interpolation = 'nearest', extent=(dict_user['L_x'][0],dict_user['L_x'][-1],dict_user['L_y'][0],dict_user['L_x'][-1]))
     fig.savefig('output/map_c.png')
     plt.close(fig)
-
 
 #-------------------------------------------------------------------------------
 
