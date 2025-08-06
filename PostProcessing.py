@@ -157,4 +157,3 @@ def PlotNeck(dict_tempo):
     fig.savefig('output/evol_ite_neck.png')
     plt.close(fig)
 
-
