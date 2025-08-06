@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
     # PF time parameters
     dt_PF = 0.01  # time step
-    n_ite_max = 1 # maximum number of iteration
+    n_ite_max = 10 # maximum number of iteration
 
     # computing information
     n_proc = 4 # number of processor used
