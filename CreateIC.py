@@ -225,6 +225,7 @@ def generate_microstructure(dict_user):
     ax1.set_title(r'Map of $\eta$s',fontsize = 30)
     ax2.imshow(M_c, interpolation = 'nearest', extent=(L_x[0],L_x[-1],L_y[0],L_y[-1]))
     ax2.set_title(r'Map of c',fontsize = 30)
+    fig.tight_layout()
     fig.savefig('output/IC_maps_pf.png')
     plt.close(fig)
 
