@@ -4,6 +4,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import pyvista as pv
 
 # Own
 from main import index_to_str
