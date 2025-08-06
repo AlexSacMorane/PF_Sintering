@@ -32,8 +32,8 @@ def Sort_vtk_full(dict_user):
     filepath = Path('PF_Sintering_other_'+j_str+'.pvtu')
     while filepath.exists():
         for i_proc in range(dict_user['n_proc']):
-            os.rename('PF_Sintering_other_'+j_str+'_'+str(i_proc)+'.vtu','output/vtk/PF_Sintering_other_other_'+j_str+'_'+str(i_proc)+'.vtu')
-        os.rename('PF_Sintering_other_'+j_str+'.pvtu','output/vtk/PF_Sintering_other_other_'+j_str+'.pvtu')
+            os.rename('PF_Sintering_other_'+j_str+'_'+str(i_proc)+'.vtu','output/vtk/PF_Sintering_other_'+j_str+'_'+str(i_proc)+'.vtu')
+        os.rename('PF_Sintering_other_'+j_str+'.pvtu','output/vtk/PF_Sintering_other_'+j_str+'.pvtu')
         j = j + 1
         j_str = index_to_str(j)
         filepath = Path('PF_Sintering_other_'+j_str+'.pvtu')
