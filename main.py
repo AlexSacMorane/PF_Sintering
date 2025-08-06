@@ -161,6 +161,3 @@ if __name__ == '__main__':
     Sort_vtk(dict_user)
     # remove
     shutil.rmtree('data')
-
-
-    raise ValueError('stop')
