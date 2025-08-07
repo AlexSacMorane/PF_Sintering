@@ -331,10 +331,24 @@ def ComputeMorphometers(dict_tempo):
     '''
     # M0 porosity
     M0 = porespy.metrics.porosity(dict_tempo['M_void_extracted'])
+    
     # M1 perimeter
     M1 = skimage.measure.perimeter(dict_tempo['M_solid'])
+    
     # M2 grain size
+    # this morphometer requires more lines
+    # an algorithm is called to determine the size of the grains
+    sizes = porespy.filters.local_thickness(dict_tempo['M_solid'])
+    # then a size distribution is called  
+    data = porespy.metrics.pore_size_distribution(sizes, log=False, bins=20)
+    # finally the mean (weighted by the probability) is computed
     M2 = 0
+    counter = 0
+    for i_bin in range(len(data.bin_centers)):
+        M2 = data.pdf[i_bin]*data.bin_centers[i_bin]
+        counter = counter + data.pdf[i_bin]
+    M2 = M2 / counter
+    
     # M3 Euler
     M3 = skimage.measure.euler_number(dict_tempo['M_solid'])
 
