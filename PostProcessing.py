@@ -36,6 +36,13 @@ def pp(dict_user):
     ReadCSV(dict_user, dict_tempo)
 
     print('\nread pvtu')
+    # determine the zone of interest for the porosity
+    # a box is generated from the lastest configuration (more dense)
+    # read the .pvtu
+    ReadPVTU(dict_user, dict_tempo, 'output/vtk/PF_Sintering_other_'+dict_user['last_j_str']+'.pvtu')     
+    # compute the zone of interest
+    RebuildMap_ZoneInterest(dict_user, dict_tempo)
+
     # iterate on the .pvtu files
     for i in range(dict_user['last_j']+1):
 
@@ -284,6 +291,57 @@ def RebuildMap(dict_user, dict_tempo):
                 M_solid[-1-i_y, i_x] = 1
     
     # extract maps (exclude void on the sides)
+    i_x_min = dict_tempo['zoneInterest'][0]
+    i_x_max = dict_tempo['zoneInterest'][1]
+    i_y_min = dict_tempo['zoneInterest'][2]
+    i_y_max = dict_tempo['zoneInterest'][3]
+
+    # save
+    dict_tempo['M_void'] = M_void.copy()
+    dict_tempo['M_void_extracted'] = M_void.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
+    dict_tempo['M_solid'] = M_solid.copy()
+    dict_tempo['M_solid_extracted'] = M_solid.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
+
+#-------------------------------------------------------------------------------
+
+def RebuildMap_ZoneInterest(dict_user, dict_tempo):
+    '''
+    Rebuild the map from the output of the pyvista. And determine the zone of interest for the porosity estimation.
+    '''    
+    # initialization
+    M_solid = np.zeros((len(dict_user['L_y']), len(dict_user['L_x'])))
+
+    # the map is not know
+    if dict_tempo['map'] == None:
+        # init map
+        map = []
+        # iterate on the points
+        for i_point in range(len(dict_tempo['L_points'])):
+            # search node in the mesh
+            L_search = list(abs(np.array(dict_user['L_x']-list(dict_tempo['L_points'][i_point])[0])))
+            i_x = L_search.index(min(L_search))
+            L_search = list(abs(np.array(dict_user['L_y']-list(dict_tempo['L_points'][i_point])[1])))
+            i_y = L_search.index(min(L_search))
+            # save map
+            map.append([i_x, i_y])
+            # rebuild maps
+            if dict_tempo['L_c'][i_point] > 0.5:
+                M_solid[-1-i_y, i_x] = 1
+        # save map
+        dict_tempo['map'] = map
+
+    # the map is know
+    else:
+        # iterate on the points
+        for i_point in range(len(dict_tempo['L_points'])):
+            # read the map
+            i_x = dict_tempo['map'][i_point][0]
+            i_y = dict_tempo['map'][i_point][1]
+            # rebuild maps
+            if dict_tempo['L_c'][i_point] > 0.5:
+                M_solid[-1-i_y, i_x] = 1
+    
+    # extract maps (exclude void on the sides)
     # find i_x_min
     i_x_min = 0
     while np.max(M_solid[:, i_x_min]) == 0:
@@ -300,12 +358,9 @@ def RebuildMap(dict_user, dict_tempo):
     i_y_max = M_solid.shape[0]-1
     while np.max(M_solid[i_y_max, :]) == 0:
         i_y_max = i_y_max - 1
-    
+
     # save
-    dict_tempo['M_void'] = M_void.copy()
-    dict_tempo['M_void_extracted'] = M_void.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
-    dict_tempo['M_solid'] = M_solid.copy()
-    dict_tempo['M_solid_extracted'] = M_solid.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
+    dict_tempo['zoneInterest'] = [i_x_min, i_x_max, i_y_min, i_y_max]
 
 #-------------------------------------------------------------------------------
 
