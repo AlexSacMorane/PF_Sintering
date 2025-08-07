@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
     # PF time parameters
     dt_PF = 0.01  # time step
-    n_ite_max = 20 # maximum number of iteration
+    n_ite_max = 100 # maximum number of iteration
 
     # computing information
     n_proc = 4 # number of processor used
@@ -94,7 +94,7 @@ if __name__ == '__main__':
 
     # sorting files
     reduce_vtk = True # reduce or not the number of vtk
-    n_vtk_max = 10 # if reduced, maximal number of vtk files
+    n_vtk_max = 20 # if reduced, maximal number of vtk files
 
 #------------------------------------------------------------------------------
 # create dict
@@ -186,4 +186,3 @@ if __name__ == '__main__':
       
     # see PostProcessing.py for the called functions
     pp(dict_user)
-    
