@@ -69,7 +69,7 @@ def pp(dict_user):
     hours = (tac-tic)//(60*60)
     minutes = (tac-tic - hours*60*60)//(60)
     seconds = int(tac-tic - hours*60*60 - minutes*60)
-    print("\nPost-processing time + : "+str(hours)+" hours "+str(minutes)+" minutes "+str(seconds)+" seconds")
+    print("\nPost-processing time : "+str(hours)+" hours "+str(minutes)+" minutes "+str(seconds)+" seconds")
     print('Post-processing ends')
 
 #-------------------------------------------------------------------------------
