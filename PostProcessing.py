@@ -207,7 +207,7 @@ def PlotNeck(dict_tempo):
     ax1.set_ylabel('neck area (-)', fontsize=25)
     ax1.tick_params(axis='both', labelsize=20, width=3, length=3)
     fig.tight_layout()
-    fig.savefig('output/evol_ite_neck.png')
+    fig.savefig('output/evol_time_neck.png')
     plt.close(fig)
 
 #-------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ def PlotFreeSurface(dict_tempo):
     ax1.set_ylabel('free surface (-)', fontsize=25)
     ax1.tick_params(axis='both', labelsize=20, width=3, length=3)
     fig.tight_layout()
-    fig.savefig('output/evol_ite_freesurface.png')
+    fig.savefig('output/evol_time_freesurface.png')
     plt.close(fig)
 
 #-------------------------------------------------------------------------------
@@ -400,7 +400,7 @@ def ComputeMorphometers(dict_tempo):
     M2 = 0
     counter = 0
     for i_bin in range(len(data.bin_centers)):
-        M2 = data.pdf[i_bin]*data.bin_centers[i_bin]
+        M2 = M2 + data.pdf[i_bin]*data.bin_centers[i_bin]
         counter = counter + data.pdf[i_bin]
     M2 = M2 / counter
     
@@ -445,7 +445,7 @@ def PlotMorphometers(dict_tempo):
     ax4.tick_params(axis='both', labelsize=20, width=3, length=3)
     # close
     fig.tight_layout()
-    fig.savefig('output/evol_ite_morphometers.png')
+    fig.savefig('output/evol_time_morphometers.png')
     plt.close(fig)
 
 #-------------------------------------------------------------------------------
