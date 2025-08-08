@@ -45,6 +45,11 @@ def pp(dict_user):
 
     # iterate on the .pvtu files
     for i in range(dict_user['last_j']+1):
+        # flag the initial map (for plot)
+        if i == 0 :
+            dict_tempo['ic_flag'] = True
+        else:
+            dict_tempo['ic_flag'] = False
 
         # read the .pvtu
         ReadPVTU(dict_user, dict_tempo, 'output/vtk/PF_Sintering_other_'+index_to_str(i)+'.pvtu')
@@ -302,6 +307,10 @@ def RebuildMap(dict_user, dict_tempo):
     dict_tempo['M_solid'] = M_solid.copy()
     dict_tempo['M_solid_extracted'] = M_solid.copy()[i_y_min: i_y_max+1, i_x_min: i_x_max+1]
 
+    # save ic 
+    if dict_tempo['ic_flag']:
+        dict_tempo['M_solid_ic'] = M_solid.copy()   
+
 #-------------------------------------------------------------------------------
 
 def RebuildMap_ZoneInterest(dict_user, dict_tempo):
@@ -369,9 +378,12 @@ def PlotMap(dict_user, dict_tempo):
     plot the current configuration.
     '''
     # Plot maps
-    fig, (ax1) = plt.subplots(1,1,figsize=(16,9))
+    fig, (ax1, ax2) = plt.subplots(1,2,figsize=(16,9))
     # parameters
-    ax1.imshow(dict_tempo['M_solid'], interpolation = 'nearest', extent=(dict_user['L_x'][0],dict_user['L_x'][-1],dict_user['L_y'][0],dict_user['L_x'][-1]))
+    ax1.imshow(dict_tempo['M_solid_ic'], interpolation = 'nearest', extent=(dict_user['L_x'][0],dict_user['L_x'][-1],dict_user['L_y'][0],dict_user['L_x'][-1]))
+    ax1.set_title('ic', fontsize=30)
+    ax2.imshow(dict_tempo['M_solid'], interpolation = 'nearest', extent=(dict_user['L_x'][0],dict_user['L_x'][-1],dict_user['L_y'][0],dict_user['L_x'][-1]))
+    ax2.set_title('final', fontsize=30)
     fig.tight_layout()
     fig.savefig('output/map_c.png')
     plt.close(fig)
