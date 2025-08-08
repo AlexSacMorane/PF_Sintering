@@ -352,21 +352,25 @@ def RebuildMap_ZoneInterest(dict_user, dict_tempo):
     
     # extract maps (exclude void on the sides)
     # find i_x_min
-    i_x_min = 0
-    while np.max(M_solid[:, i_x_min]) == 0:
-        i_x_min = i_x_min + 1
+    #i_x_min = 0
+    #while np.max(M_solid[:, i_x_min]) == 0:
+    #    i_x_min = i_x_min + 1
+    i_x_min = int(0.25*M_solid.shape[0])
     # find i_x_max
-    i_x_max = M_solid.shape[1]-1
-    while np.max(M_solid[:, i_x_max]) == 0:
-        i_x_max = i_x_max - 1
+    #i_x_max = M_solid.shape[1]-1
+    #while np.max(M_solid[:, i_x_max]) == 0:
+    #    i_x_max = i_x_max - 1
+    i_x_max = int(0.75*M_solid.shape[0])
     # find i_y_min
-    i_y_min = 0
-    while np.max(M_solid[i_y_min, :]) == 0:
-        i_y_min = i_y_min + 1
+    #i_y_min = 0
+    #while np.max(M_solid[i_y_min, :]) == 0:
+    #    i_y_min = i_y_min + 1
+    i_y_min = int(0.25*M_solid.shape[1])
     # find i_y_max
-    i_y_max = M_solid.shape[0]-1
-    while np.max(M_solid[i_y_max, :]) == 0:
-        i_y_max = i_y_max - 1
+    #i_y_max = M_solid.shape[0]-1
+    #while np.max(M_solid[i_y_max, :]) == 0:
+    #    i_y_max = i_y_max - 1
+    i_y_max = int(0.75*M_solid.shape[1])
 
     # save
     dict_tempo['zoneInterest'] = [i_x_min, i_x_max, i_y_min, i_y_max]
