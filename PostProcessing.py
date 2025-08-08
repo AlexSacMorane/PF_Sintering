@@ -124,8 +124,8 @@ def ReadCSV(dict_user, dict_tempo):
     plt.close(fig)
     # output
     print('conservation of the mass:')
-    print('mass min:', min(c_pp), '(delta ', int(100*(np.mean(c_pp)-min(c_pp))/np.mean(c_pp)),'% of mean value)')
-    print('mass max:', max(c_pp), '(delta ', int(100*(max(c_pp)-np.mean(c_pp))/np.mean(c_pp)),'% of mean value)')
+    print('mass min:', round(min(c_pp),3), '(delta', int(100*(np.mean(c_pp)-min(c_pp))/np.mean(c_pp)),'% of mean value)')
+    print('mass max:', round(max(c_pp),3), '(delta', int(100*(max(c_pp)-np.mean(c_pp))/np.mean(c_pp)),'% of mean value)')
 
     # plot time-etas
     fig, ax1 = plt.subplots(1,1,figsize=(16,9))
